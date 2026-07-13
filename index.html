@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Imparable</title>
+    <title>Emprendiendo con Alex Chimbo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #111;
             display: flex;
-            flex-direction: column; /* Cambiado a columna para alinear título y video verticalmente */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             user-select: none;
-            color: #fff; /* Asegura que el título sea visible sobre fondo oscuro */
+            color: #fff;
         }
 
-        /* Estilos para el nuevo título */
         h1 {
             text-align: center;
-            margin-bottom: 20px; /* Espacio entre título y video */
-            font-size: 2.5em; /* Tamaño de fuente más grande para el título */
-            text-transform: uppercase; /* Título en mayúsculas (opcional) */
-            letter-spacing: 2px; /* Espaciado entre letras (opcional) */
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .video-container {
@@ -36,12 +35,13 @@
             overflow: hidden;
             background-color: #000;
         }
+
         video {
             width: 100%;
             display: block;
-            pointer-events: none; /* Desactiva CUALQUIER clic o interacción directa sobre el video */
+            pointer-events: none;
         }
-        /* Botón personalizado para activar el sonido */
+
         .audio-btn {
             position: absolute;
             top: 20px;
@@ -57,32 +57,135 @@
             transition: background 0.3s;
             z-index: 10;
         }
+
         .audio-btn:hover {
             background-color: rgba(255, 255, 255, 0.9);
             color: #000;
+        }
+
+        /* Contenedores de Encuesta y Formulario (Ocultos por defecto) */
+        .card-container {
+            display: none; 
+            max-width: 550px;
+            width: 90%;
+            background-color: #1a1a1a;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            border: 1px solid #333;
+            box-sizing: border-box;
+        }
+
+        .step-title {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .survey-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-si { background-color: #28a745; color: white; }
+        .btn-si:hover { background-color: #218838; transform: scale(1.03); }
+        .btn-no { background-color: #dc3545; color: white; }
+        .btn-no:hover { background-color: #c82333; transform: scale(1.03); }
+        
+        .btn-next { 
+            background-color: #007bff; 
+            color: white; 
+            width: 100%; 
+            margin-top: 15px;
+        }
+        .btn-next:hover { background-color: #0069d9; }
+
+        /* Estilos para las cajas de entrada de datos */
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #252525;
+            color: white;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #2d2d2d;
         }
     </style>
 </head>
 <body>
 
-    <!-- Nuevo título añadido justo antes del contenedor del video -->
     <h1>EMPRENDIENDO CON ALEX CHIMBO</h1>
 
+    <!-- BLOQUE 0: El Video -->
     <div class="video-container" id="videoWrapper">
-        <!-- Botón de Audio -->
         <button class="audio-btn" id="audioBtn">🔊 Activar Sonido</button>
-        
-        <!-- Video sin controles, autoplay, muted, playsinline -->
         <video id="miVideo" autoplay muted playsinline preload="auto">
             <source src="https://videotourl.com/videos/1783955701601-73169369-596f-4c0c-b8a6-d380e48d2922.mp4" type="video/mp4">
             Tu navegador no soporta la reproducción de este video.
         </video>
     </div>
 
+    <!-- BLOQUE 1: Pregunta Inicial -->
+    <div class="card-container" id="stepPregunta">
+        <div class="step-title">¿Desearía obtener más información y asesoría sobre nuestro modelo de negocios?</div>
+        <div class="survey-buttons">
+            <button class="btn btn-si" onclick="respuestaInicial('SI')">Sí</button>
+            <button class="btn btn-no" onclick="respuestaInicial('NO')">No</button>
+        </div>
+    </div>
+
+    <!-- BLOQUE 2: Nombre y Apellido -->
+    <div class="card-container" id="stepNombre">
+        <div class="step-title">Ingrese su nombre y apellido</div>
+        <input type="text" id="inputNombre" class="input-field" placeholder="Ej. Juan Pérez" autocomplete="off">
+        <button class="btn btn-next" onclick="siguientePaso('stepNombre', 'stepCelular', 'inputNombre')">Continuar</button>
+    </div>
+
+    <!-- BLOQUE 3: Número de Celular -->
+    <div class="card-container" id="stepCelular">
+        <div class="step-title">Ingrese su número de celular</div>
+        <input type="tel" id="inputCelular" class="input-field" placeholder="Ej. 0999999999" autocomplete="off">
+        <button class="btn btn-next" onclick="siguientePaso('stepCelular', 'stepCorreo', 'inputCelular')">Continuar</button>
+    </div>
+
+    <!-- BLOQUE 4: Correo Electrónico -->
+    <div class="card-container" id="stepCorreo">
+        <div class="step-title">Ingrese su correo electrónico</div>
+        <input type="email" id="inputCorreo" class="input-field" placeholder="Ej. juan@correo.com" autocomplete="off">
+        <button class="btn btn-next" onclick="finalizarRegistro()">Enviar Información</button>
+    </div>
+
     <script>
         const video = document.getElementById('miVideo');
         const audioBtn = document.getElementById('audioBtn');
-        const wrapper = document.getElementById('videoWrapper');
+        const videoWrapper = document.getElementById('videoWrapper');
+
+        // Variables para guardar los datos recopilados temporalmente
+        let datosUsuario = {
+            nombre: "",
+            celular: "",
+            correo: ""
+        };
 
         // Control del botón de audio
         audioBtn.addEventListener('click', (e) => {
@@ -95,15 +198,64 @@
             }
         });
 
-        // "Anti-pausa": Si por alguna razón externa el video se pausa, se fuerza su reproducción al instante
+        // Anti-pausa del video
         video.addEventListener('pause', () => {
-            video.play();
+            if (!video.ended) video.play();
         });
 
-        // Bloquear por completo el menú de clic derecho en todo el contenedor
-        wrapper.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
+        // Bloquear clic derecho en el video
+        videoWrapper.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Al finalizar el video, abre la primera pregunta
+        video.addEventListener('ended', () => {
+            videoWrapper.style.display = 'none';
+            document.getElementById('stepPregunta').style.display = 'block';
         });
+
+        // Lógica de la pregunta Sí/No
+        function respuestaInicial(opcion) {
+            if (opcion === 'SI') {
+                document.getElementById('stepPregunta').style.display = 'none';
+                document.getElementById('stepNombre').style.display = 'block';
+            } else {
+                alert('Gracias por tu tiempo. ¡Mucho éxito!');
+                // Aquí podrías recargar la página o redirigir a otro sitio si quisieras
+            }
+        }
+
+        // Lógica para avanzar entre los campos de texto
+        function siguientePaso(pasoActualId, pasoSiguienteId, inputId) {
+            const valorInput = document.getElementById(inputId).value.trim();
+            
+            // Validación básica para evitar campos vacíos
+            if (valorInput === "") {
+                alert("Por favor, rellene este campo antes de continuar.");
+                return;
+            }
+
+            // Guardamos el dato según corresponda
+            if (inputId === 'inputNombre') datosUsuario.nombre = valorInput;
+            if (inputId === 'inputCelular') datosUsuario.celular = valorInput;
+
+            // Transición de pantallas
+            document.getElementById(pasoActualId).style.display = 'none';
+            document.getElementById(pasoSiguienteId).style.display = 'block';
+        }
+
+        // Último paso: Finalización
+        function finalizarRegistro() {
+            const correoVal = document.getElementById('inputCorreo').value.trim();
+            if (correoVal === "") {
+                alert("Por favor, ingrese su correo electrónico.");
+                return;
+            }
+            datosUsuario.correo = correoVal;
+
+            // Aquí los datos ya están listos en la variable 'datosUsuario'
+            alert(`¡Registro completado con éxito, ${datosUsuario.nombre}! Nos comunicaremos al celular ${datosUsuario.celular}.`);
+            
+            // NOTA: En este punto puedes integrar una API, guardar en base de datos o enviar un correo electrónico.
+        }
     </script>
 
 </body>
