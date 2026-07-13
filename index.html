@@ -6,257 +6,614 @@
     <title>Emprendiendo con Alex Chimbo</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            user-select: none;
-            color: #fff;
         }
-
-        h1 {
-            text-align: center;
+        .title-heading {
+            color: #333;
+            font-size: 2rem;
             margin-bottom: 20px;
-            font-size: 2.2em;
+            text-align: center;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
-
         .video-container {
-            position: relative;
             max-width: 800px;
             width: 90%;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             overflow: hidden;
             background-color: #000;
         }
-
         video {
             width: 100%;
             display: block;
-            pointer-events: none;
         }
-
-        .audio-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: background 0.3s;
-            z-index: 10;
-        }
-
-        .audio-btn:hover {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #000;
-        }
-
-        /* Contenedores de Encuesta y Formulario (Ocultos por defecto) */
+        
+        /* Contenedores base comunes */
         .card-container {
-            display: none; 
-            max-width: 550px;
+            display: none;
+            max-width: 580px;
             width: 90%;
-            background-color: #1a1a1a;
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            border: 1px solid #333;
-            box-sizing: border-box;
+            animation: fadeIn 0.4s ease forwards;
         }
-
-        .step-title {
-            font-size: 1.5em;
+        .card-title {
+            color: #222;
+            font-size: 1.3rem;
             margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .card-note {
+            font-size: 0.95rem;
+            color: #555;
+            background-color: #f8fafc;
+            border-left: 4px solid #007bff;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: left;
             line-height: 1.4;
         }
-
-        .survey-buttons {
+        
+        /* Cuadros de texto de bienvenida por sección */
+        .section-welcome-text-a {
+            font-size: 1rem;
+            color: #444;
+            background-color: #f0fdf4;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        .section-welcome-text-b {
+            font-size: 1rem;
+            color: #444;
+            background-color: #f0f9ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        .section-welcome-text-c {
+            font-size: 1rem;
+            color: #444;
+            background-color: #faf5ff;
+            border-left: 4px solid #8b5cf6;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        
+        /* Botones de la Pregunta 1 (Sí / No) */
+        .btn-group-p1 {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
-
-        .btn {
-            padding: 15px 40px;
-            font-size: 1.1em;
+        .survey-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: background 0.2s ease;
         }
-
-        .btn-si { background-color: #28a745; color: white; }
-        .btn-si:hover { background-color: #218838; transform: scale(1.03); }
+        .btn-yes { background-color: #28a745; color: white; }
+        .btn-yes:hover { background-color: #218838; }
         .btn-no { background-color: #dc3545; color: white; }
-        .btn-no:hover { background-color: #c82333; transform: scale(1.03); }
-        
-        .btn-next { 
-            background-color: #007bff; 
-            color: white; 
-            width: 100%; 
-            margin-top: 15px;
-        }
-        .btn-next:hover { background-color: #0069d9; }
+        .btn-no:hover { background-color: #c82333; }
 
-        /* Estilos para las cajas de entrada de datos */
-        .input-field {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1em;
-            border-radius: 8px;
-            border: 1px solid #444;
-            background-color: #252525;
-            color: white;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            text-align: center;
+        /* Botones de opción múltiple */
+        .btn-group-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .input-field:focus {
+        .btn-option {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 2px solid #e2e8f0;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-option:hover {
+            background-color: #edf2f7;
+            border-color: #cbd5e1;
+        }
+
+        /* Campos de texto para la opción "Otro" e Información Personal */
+        .input-other-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+        .input-text-field {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
             outline: none;
-            border-color: #007bff;
-            background-color: #2d2d2d;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        .input-text-field:focus {
+            border-color: #cbd5e1;
+            background-color: #fcfcfd;
+        }
+        
+        .btn-submit-form {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-top: 10px;
+        }
+        .btn-submit-form:hover {
+            background-color: #218838;
+        }
+        .btn-submit-form:disabled {
+            background-color: #a3e635;
+            cursor: not-allowed;
+        }
+
+        .btn-submit-other {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .btn-submit-other:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <h1>EMPRENDIENDO CON ALEX CHIMBO</h1>
+    <h1 class="title-heading">EMPRENDIENDO CON ALEX CHIMBO</h1>
 
-    <!-- BLOQUE 0: El Video -->
+    <!-- Bloque de Video -->
     <div class="video-container" id="videoWrapper">
-        <button class="audio-btn" id="audioBtn">🔊 Activar Sonido</button>
-        <video id="miVideo" autoplay muted playsinline preload="auto">
+        <video id="myVideo" controls autoplay muted>
             <source src="https://videotourl.com/videos/1783955701601-73169369-596f-4c0c-b8a6-d380e48d2922.mp4" type="video/mp4">
-            Tu navegador no soporta la reproducción de este video.
+            Tu navegador no soporta la reproducción de video de HTML5.
         </video>
     </div>
 
-    <!-- BLOQUE 1: Pregunta Inicial -->
-    <div class="card-container" id="stepPregunta">
-        <div class="step-title">¿Desearía obtener más información y asesoría sobre nuestro modelo de negocios?</div>
-        <div class="survey-buttons">
-            <button class="btn btn-si" onclick="respuestaInicial('SI')">Sí</button>
-            <button class="btn btn-no" onclick="respuestaInicial('NO')">No</button>
+    <!-- Pregunta 1 -->
+    <div class="card-container" id="step1">
+        <p class="card-title">¿Desearía obtener más información y asesoría sobre nuestro modelo de negocios?</p>
+        <div class="btn-group-p1">
+            <button class="survey-btn btn-yes" onclick="handleFirstAnswer('Sí')">Sí, me interesa</button>
+            <button class="survey-btn btn-no" onclick="handleFirstAnswer('No')">No por el momento</button>
         </div>
     </div>
 
-    <!-- BLOQUE 2: Nombre y Apellido -->
-    <div class="card-container" id="stepNombre">
-        <div class="step-title">Ingrese su nombre y apellido</div>
-        <input type="text" id="inputNombre" class="input-field" placeholder="Ej. Juan Pérez" autocomplete="off">
-        <button class="btn btn-next" onclick="siguientePaso('stepNombre', 'stepCelular', 'inputNombre')">Continuar</button>
+    <!-- Pregunta 2 -->
+    <div class="card-container" id="step2">
+        <p class="card-title">¿Cuál es el motivo por el cual te interesaste por By Dzyne?</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="navigateToSection('sectionA')"><b>A)</b> [Inserta aquí tu opción de motivo A]</button>
+            <button class="btn-option" onclick="navigateToSection('sectionB')"><b>B)</b> [Inserta aquí tu opción de motivo B]</button>
+            <button class="btn-option" onclick="navigateToSection('sectionC')"><b>C)</b> [Inserta aquí tu opción de motivo C]</button>
+        </div>
     </div>
 
-    <!-- BLOQUE 3: Número de Celular -->
-    <div class="card-container" id="stepCelular">
-        <div class="step-title">Ingrese su número de celular</div>
-        <input type="tel" id="inputCelular" class="input-field" placeholder="Ej. 0999999999" autocomplete="off">
-        <button class="btn btn-next" onclick="siguientePaso('stepCelular', 'stepCorreo', 'inputCelular')">Continuar</button>
+    <!-- ==================== SECCIÓN A ==================== -->
+    <div class="card-container" id="sectionA">
+        <div class="section-welcome-text-a">
+            ¡Felicidades por tomar la iniciativa! El primer paso para cambiar tu realidad económica es tener la determinación de iniciar. Estás a punto de conocer un modelo de negocio diseñado para quienes buscan resultados reales. Para asegurar que este proyecto se adapte perfectamente a tus metas, por favor responde con total honestidad las siguientes preguntas de perfilamiento:
+        </div>
+        
+        <p class="card-title" style="text-align: left;">1. ¿Cuál es tu principal motivación para buscar más fuentes de ingresos?</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionAAnswer1('Libertad Financiera y Progreso Económico')">💰 Libertad Financiera y Progreso Económico</button>
+            <button class="btn-option" onclick="handleSectionAAnswer1('Ayudar a la Familia')">👨‍👩‍👧‍👦 Ayudar a la Familia</button>
+            <button class="btn-option" onclick="handleSectionAAnswer1('Independencia, Flexibilidad y Autonomía')">⏰ Independencia, Flexibilidad y Autonomía</button>
+            <button class="btn-option" onclick="handleSectionAAnswer1('Desarrollo Personal y Profesional')">📈 Desarrollo Personal y Profesional</button>
+            <button class="btn-option" onclick="handleSectionAAnswer1('Estilo de Vida (Viajes, Cumplir Sueños)')">🌍 Estilo de Vida (Viajes, Cumplir Sueños)</button>
+            <button class="btn-option" onclick="handleSectionAAnswer1('Interés por las Ventas o el Mundo Digital')">💻 Interés por las Ventas o el Mundo Digital</button>
+            
+            <div class="input-other-container">
+                <input type="text" id="inputOtherA1" class="input-text-field" placeholder="✏️ Otro (Especificar motivo)...">
+                <button class="btn-submit-other" onclick="submitOtherAnswerA1()">Enviar</button>
+            </div>
+        </div>
     </div>
 
-    <!-- BLOQUE 4: Correo Electrónico -->
-    <div class="card-container" id="stepCorreo">
-        <div class="step-title">Ingrese su correo electrónico</div>
-        <input type="email" id="inputCorreo" class="input-field" placeholder="Ej. juan@correo.com" autocomplete="off">
-        <button class="btn btn-next" onclick="finalizarRegistro()">Enviar Información</button>
+    <div class="card-container" id="sectionA_q2">
+        <p class="card-title" style="text-align: left;">2. ¿Qué te impide avanzar hacia tus metas?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionAAnswer2('No tengo tiempo para nada y vivo desorganizado/a')">⏰ No tengo tiempo para nada y vivo desorganizado/a</button>
+            <button class="btn-option" onclick="handleSectionAAnswer2('Me paralizo y postergo todo')">😳 Me paralizo y postergo todo</button>
+            <button class="btn-option" onclick="handleSectionAAnswer2('No sé cómo hacerlo')">📚 No sé cómo hacerlo</button>
+            <button class="btn-option" onclick="handleSectionAAnswer2('No tengo la plata')">💸 No tengo la plata</button>
+            <button class="btn-option" onclick="handleSectionAAnswer2('Estoy perdido/a, no sé por dónde empezar')">🧭 Estoy perdido/a, no sé por dónde empezar</button>
+            
+            <div class="input-other-container">
+                <input type="text" id="inputOtherA2" class="input-text-field" placeholder="✏️ Otro (Especificar impedimento)...">
+                <button class="btn-submit-other" onclick="submitOtherAnswerA2()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionA_q3">
+        <p class="card-title" style="text-align: left;">3. ¿Aproximadamente, cuánto ganas al mes en dólares (USD)?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionAAnswer3('Menos de $100 USD al mes')">💵 Menos de $100 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionAAnswer3('Entre $100 a $500 USD al mes')">💵 Entre $100 a $500 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionAAnswer3('Entre $500 a $1,000 USD al mes')">💵 Entre $500 a $1,000 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionAAnswer3('Entre $1,000 a $2,000 USD al mes')">💵 Entre $1,000 a $2,000 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionAAnswer3('Más de $2,000 USD al mes')">💵 Más de $2,000 USD al mes</button>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionA_q4">
+        <p class="card-title" style="text-align: left; margin-bottom: 12px;">4. ¿Qué nivel de inversión estarías dispuesto a destinar para activar tu propia franquicia y construir un ingreso mínimo de +$1,000 USD extras al mes?</p>
+        <div class="card-note">
+            <b>Nota:</b> Al iniciar hoy tu Franquicia Digital, aseguras acompañamiento estratégico 1 a 1 directamente conmigo, inventario en productos que duplica el valor de tu inscripción y acceso inmediato a nuestro sistema educativo de negocios valorado en más de +$3,000 USD.
+        </div>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionAAnswer4('Más de $500 USD')">🔻 Más de $500 USD</button>
+            <button class="btn-option" onclick="handleSectionAAnswer4('Entre $500 a más de $1,000 USD')">💵 Entre $500 a más de $1,000 USD</button>
+            <button class="btn-option" onclick="handleSectionAAnswer4('Entre $2,000 a más de $4,000 USD')">🚀 Entre $2,000 a más de $4,000 USD</button>
+            <button class="btn-option" onclick="handleSectionAAnswer4('Más de $5,000 USD')">💎 Más de $5,000 USD</button>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionA_q5">
+        <p class="card-title" style="text-align: left;">5. Sabiendo el valor de nuestra propuesta, ¿podrías gestionar una inversión mínima de $500 USD (más IVA aplicable solo en Ecuador) para arrancar con el desarrollo de tu propia Franquicia Digital?</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionAAnswer5('Sí, podría hacerlo de inmediato')">🟢 Sí, podría hacerlo de inmediato</button>
+            <button class="btn-option" onclick="handleSectionAAnswer5('No tengo el dinero completo en este momento, pero lo podría conseguir / financiar')">🟡 No tengo el dinero completo en este momento, pero lo podría conseguir / financiar</button>
+            <button class="btn-option" onclick="handleSectionAAnswer5('No, definitivamente no podría hacerlo')">🔴 No, definitivamente no podría hacerlo</button>
+        </div>
+    </div>
+
+
+    <!-- ==================== SECCIÓN B ==================== -->
+    <div class="card-container" id="sectionB">
+        <div class="section-welcome-text-b">
+            ¡Excelente decisión y felicidades por tu iniciativa! Tener dudas es la señal clara de que estás analizando este proyecto con la seriedad que se merece. En los negocios inteligentes, las preguntas correctas traen las mejores respuestas. Las siguientes preguntas están diseñadas específicamente para identificar tus inquietudes y asegurarnos de aclararlas con total transparencia en nuestro próximo paso:
+        </div>
+        
+        <p class="card-title" style="text-align: left;">1. Para poder ayudarte mejor en nuestra próxima reunión, ¿cuál es tu principal duda o inquietun en este momento?</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionBAnswer1('No estoy seguro de tener el tiempo suficiente para desarrollar el proyecto.')"><b>A)</b> No estoy seguro de tener el tiempo suficiente para desarrollar el proyecto.</button>
+            <button class="btn-option" onclick="handleSectionBAnswer1('Tengo dudas sobre cómo funciona el sistema de comisiones y ganancias.')"><b>B)</b> Tengo dudas sobre cómo funciona el sistema de comisiones y ganancias.</button>
+            <button class="btn-option" onclick="handleSectionBAnswer1('Me gusta todo, pero me frena un poco el tema de la inversión inicial.')"><b>C)</b> Me gusta todo, pero me frena un poco el tema de la inversión inicial.</button>
+            <button class="btn-option" onclick="handleSectionBAnswer1('No tengo experiencia en ventas o negocios digitales y temo no saber cómo empezar.')"><b>D)</b> No tengo experiencia en ventas o negocios digitales y temo no saber cómo empezar.</button>
+            
+            <div class="input-other-container">
+                <input type="text" id="inputOtherB1" class="input-text-field" placeholder="✏️ E) Otro...">
+                <button class="btn-submit-other" onclick="submitOtherAnswerB1()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionB_q2">
+        <p class="card-title" style="text-align: left;">2. ¿Qué te impide avanzar hacia tus metas?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionBAnswer2('No tengo tiempo para nada y vivo desorganizado/a')">⏰ No tengo tiempo para nada y vivo desorganizado/a</button>
+            <button class="btn-option" onclick="handleSectionBAnswer2('Me paralizo y postergo todo')">😳 Me paralizo y postergo todo</button>
+            <button class="btn-option" onclick="handleSectionBAnswer2('No sé cómo hacerlo')">📚 No sé cómo hacerlo</button>
+            <button class="btn-option" onclick="handleSectionBAnswer2('No tengo la plata')">💸 No tengo la plata</button>
+            <button class="btn-option" onclick="handleSectionBAnswer2('Estoy perdido/a, no sé por dónde empezar')">🧭 Estoy perdido/a, no sé por dónde empezar</button>
+            
+            <div class="input-other-container">
+                <input type="text" id="inputOtherB2" class="input-text-field" placeholder="✏️ Otro...">
+                <button class="btn-submit-other" onclick="submitOtherAnswerB2()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionB_q3">
+        <p class="card-title" style="text-align: left;">3. ¿Aproximadamente, cuánto ganas al mes en dólares (USD)?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionBAnswer3('Menos de $100 USD al mes')">💵 Menos de $100 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionBAnswer3('Entre $100 a $500 USD al mes')">💵 Entre $100 a $500 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionBAnswer3('Entre $500 a $1,000 USD al mes')">💵 Entre $500 a $1,000 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionBAnswer3('Entre $1,000 a $2,000 USD al mes')">💵 Entre $1,000 a $2,000 USD al mes</button>
+            <button class="btn-option" onclick="handleSectionBAnswer3('Más de $2,000 USD al mes')">💵 Más de $2,000 USD al mes</button>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionB_q4">
+        <p class="card-title" style="text-align: left;">4. ¿Qué nivel de inversión estarías dispuesto a destinar para activar tu propia franquicia y construir un ingreso mínimo de +$1,000 USD extras al mes?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionBAnswer4('Más de $500 USD')">🔻 Más de $500 USD</button>
+            <button class="btn-option" onclick="handleSectionBAnswer4('Entre $500 a más de $1,000 USD')">💵 Entre $500 a más de $1,000 USD</button>
+            <button class="btn-option" onclick="handleSectionBAnswer4('Entre $2,000 a más de $4,000 USD')">🚀 Entre $2,000 a más de $4,000 USD</button>
+            <button class="btn-option" onclick="handleSectionBAnswer4('Más de $5,000 USD')">💎 Más de $5,000 USD</button>
+        </div>
+    </div>
+
+    <div class="card-container" id="sectionB_q5">
+        <p class="card-title" style="text-align: left;">5. Sabiendo el valor de nuestra propuesta, ¿podrías gestionar una inversión mínima de $500 USD (más IVA aplicable solo en Ecuador) para arrancar con el desarrollo de tu propia Franquicia Digital?</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionBAnswer5('Sí, podría hacerlo de inmediato')">🟢 Sí, podría hacerlo de inmediato</button>
+            <button class="btn-option" onclick="handleSectionBAnswer5('No tengo el dinero completo en este momento, pero lo podría conseguir / financiar')">🟡 No tengo el dinero completo en este momento, pero lo podría conseguir / financiar</button>
+            <button class="btn-option" onclick="handleSectionBAnswer5('No, definitivamente no podría hacerlo')">🔴 No, definitivamente no podría hacerlo</button>
+        </div>
+    </div>
+
+
+    <!-- ==================== SECCIÓN C ==================== -->
+    <div class="card-container" id="sectionC">
+        <div class="section-welcome-text-c">
+            ¡Excelente elección y bienvenido/a! Priorizar tu bienestar y buscar soluciones de alta calidad es la mejor decisión. Nuestro catálogo está diseñado para entregarte resultados reales desde el primer día. A continuación, te abrimos las puertas a nuestra tienda digital para que descubras la variedad de opciones disponibles y elijas el producto que se adapte perfectamente a tu necesidad actual. ¡Explóralo aquí mismo!:
+        </div>
+        
+        <p class="card-title" style="text-align: left;">1. ¡Excelente elección! Nuestro catálogo está diseñado para darte resultados reales. ¿En qué línea de productos específicos te gustaría enfocarte hoy?*</p>
+        <div class="btn-group-options">
+            <button class="btn-option" onclick="handleSectionCAnswer1('Tecnología Vitera Biohacking')">🧬 <b>Tecnología Vitera Biohacking:</b> Innovación avanzada y conceptos de vanguardia para optimizar tu salud.</button>
+            <button class="btn-option" onclick="handleSectionCAnswer1('Energía Cuántica')">🔮 <b>Energía Cuántica:</b> Parches Quantum diseñados para trabajar directamente con tecnología de energía cuántica.</button>
+            <button class="btn-option" onclick="handleSectionCAnswer1('Línea Automotriz')">🚗 <b>Línea Automotriz:</b> Pastillas MPG-Caps de alta eficiencia para el ahorro óptimo de combustible.</button>
+            <button class="btn-option" onclick="handleSectionCAnswer1('Club de Viajes y Vacaciones')">✈️ <b>Club de Viajes y Vacaciones:</b> BBDream Vacations, la plataforma exclusiva para diseñar tus próximas vacaciones soñadas.</button>
+            <button class="btn-option" onclick="handleSectionCAnswer1('Todas las líneas disponibles')">💡 Quiero conocer todas las líneas disponibles</button>
+        </div>
+    </div>
+
+
+    <!-- ==================== FORMULARIO DE CONTACTO FINAL ==================== -->
+    <div class="card-container" id="contactSection">
+        <h2 class="card-title" style="margin-bottom: 10px;">📋 INFORMACIÓN PERSONAL PARA CONTACTO INMEDIATO</h2>
+        <p style="color: #666; font-size: 0.95rem; margin-bottom: 25px;">Por favor, completa tus datos correctamente para ponernos en contacto y darte prioridad en la asesoría.</p>
+        
+        <div class="form-group">
+            <label for="fullName">Nombres y Apellidos Completos*</label>
+            <input type="text" id="fullName" class="input-text-field" placeholder="Ej. Juan Pérez">
+        </div>
+        
+        <div class="form-group">
+            <label for="whatsapp">Número de WhatsApp (con código de país)*</label>
+            <input type="tel" id="whatsapp" class="input-text-field" placeholder="Ej. +593 999 999 999">
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Correo Electrónico*</label>
+            <input type="email" id="email" class="input-text-field" placeholder="Ej. juan.perez@email.com">
+        </div>
+
+        <button class="btn-submit-form" id="submitBtn" onclick="submitFinalContactData()">ENVIAR INFORMACIÓN</button>
     </div>
 
     <script>
-        const video = document.getElementById('miVideo');
-        const audioBtn = document.getElementById('audioBtn');
+        // Recuerda colocar aquí tu URL limpia de producción terminada en /exec
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0Vtz0WFM46KdRQKCx0-rGB1G40abhuSOETi2cuUwiANf0baEetOn5mfuDnS_jUDJaGA/exec";
+
+        const video = document.getElementById('myVideo');
         const videoWrapper = document.getElementById('videoWrapper');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        
+        // Elementos Sección A
+        const sectionA = document.getElementById('sectionA');
+        const sectionA_q2 = document.getElementById('sectionA_q2');
+        const sectionA_q3 = document.getElementById('sectionA_q3');
+        const sectionA_q4 = document.getElementById('sectionA_q4');
+        const sectionA_q5 = document.getElementById('sectionA_q5');
+        
+        // Elementos Sección B
+        const sectionB = document.getElementById('sectionB');
+        const sectionB_q2 = document.getElementById('sectionB_q2');
+        const sectionB_q3 = document.getElementById('sectionB_q3');
+        const sectionB_q4 = document.getElementById('sectionB_q4');
+        const sectionB_q5 = document.getElementById('sectionB_q5');
+        
+        // Elementos Sección C y Contacto
+        const sectionC = document.getElementById('sectionC');
+        const contactSection = document.getElementById('contactSection');
 
-        // Variables para guardar los datos recopilados temporalmente
-        let datosUsuario = {
-            nombre: "",
-            celular: "",
-            correo: ""
-        };
+        let userPath = "";
+        let respuestasHistorial = [];
 
-        // Control del botón de audio
-        audioBtn.addEventListener('click', (e) => {
-            if (video.muted) {
-                video.muted = false;
-                audioBtn.innerHTML = "🔇 Silenciar";
-            } else {
-                video.muted = true;
-                audioBtn.innerHTML = "🔊 Activar Sonido";
-            }
-        });
-
-        // Anti-pausa del video
-        video.addEventListener('pause', () => {
-            if (!video.ended) video.play();
-        });
-
-        // Bloquear clic derecho en el video
-        videoWrapper.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        // Al finalizar el video, abre la primera pregunta
-        video.addEventListener('ended', () => {
+        // Fin del video
+        video.addEventListener('ended', function() {
             videoWrapper.style.display = 'none';
-            document.getElementById('stepPregunta').style.display = 'block';
+            step1.style.display = 'block';
         });
 
-        // Lógica de la pregunta Sí/No
-        function respuestaInicial(opcion) {
-            if (opcion === 'SI') {
-                document.getElementById('stepPregunta').style.display = 'none';
-                document.getElementById('stepNombre').style.display = 'block';
+        function handleFirstAnswer(answer) {
+            if (answer === 'Sí') {
+                step1.style.display = 'none';
+                step2.style.display = 'block';
             } else {
                 alert('Gracias por tu tiempo. ¡Mucho éxito!');
-                // Aquí podrías recargar la página o redirigir a otro sitio si quisieras
             }
         }
 
-        // Lógica para avanzar entre los campos de texto
-        function siguientePaso(pasoActualId, pasoSiguienteId, inputId) {
-            const valorInput = document.getElementById(inputId).value.trim();
-            
-            // Validación básica para evitar campos vacíos
-            if (valorInput === "") {
-                alert("Por favor, rellene este campo antes de continuar.");
-                return;
-            }
-
-            // Guardamos el dato según corresponda
-            if (inputId === 'inputNombre') datosUsuario.nombre = valorInput;
-            if (inputId === 'inputCelular') datosUsuario.celular = valorInput;
-
-            // Transición de pantallas
-            document.getElementById(pasoActualId).style.display = 'none';
-            document.getElementById(pasoSiguienteId).style.display = 'block';
+        function navigateToSection(sectionId) {
+            step2.style.display = 'none';
+            document.getElementById(sectionId).style.display = 'block';
+            if(sectionId === 'sectionA') userPath = "Sección A";
+            if(sectionId === 'sectionB') userPath = "Sección B";
+            if(sectionId === 'sectionC') userPath = "Sección C";
         }
 
-        // Último paso: Finalización
-        function finalizarRegistro() {
-            const correoVal = document.getElementById('inputCorreo').value.trim();
-            if (correoVal === "") {
-                alert("Por favor, ingrese su correo electrónico.");
+        // ==================== FLUJO SECCIÓN A ====================
+        function handleSectionAAnswer1(option) {
+            respuestasHistorial.push("P1: " + option);
+            sectionA.style.display = 'none';
+            sectionA_q2.style.display = 'block';
+        }
+        function submitOtherAnswerA1() {
+            const val = document.getElementById('inputOtherA1').value.trim();
+            if (!val) return alert('Por favor, escribe tu respuesta.');
+            handleSectionAAnswer1(val);
+        }
+        function handleSectionAAnswer2(option) {
+            respuestasHistorial.push("P2: " + option);
+            sectionA_q2.style.display = 'none';
+            sectionA_q3.style.display = 'block';
+        }
+        function submitOtherAnswerA2() {
+            const val = document.getElementById('inputOtherA2').value.trim();
+            if (!val) return alert('Por favor, escribe tu respuesta.');
+            handleSectionAAnswer2(val);
+        }
+        function handleSectionAAnswer3(option) {
+            respuestasHistorial.push("P3: " + option);
+            sectionA_q3.style.display = 'none';
+            sectionA_q4.style.display = 'block';
+        }
+        function handleSectionAAnswer4(option) {
+            respuestasHistorial.push("P4: " + option);
+            sectionA_q4.style.display = 'none';
+            sectionA_q5.style.display = 'block';
+        }
+        function handleSectionAAnswer5(option) {
+            respuestasHistorial.push("P5: " + option);
+            sectionA_q5.style.display = 'none';
+            contactSection.style.display = 'block';
+        }
+
+        // ==================== FLUJO SECCIÓN B ====================
+        function handleSectionBAnswer1(option) {
+            respuestasHistorial.push("P1: " + option);
+            sectionB.style.display = 'none';
+            sectionB_q2.style.display = 'block';
+        }
+        function submitOtherAnswerB1() {
+            const val = document.getElementById('inputOtherB1').value.trim();
+            if (!val) return alert('Por favor, escribe tu duda.');
+            handleSectionBAnswer1(val);
+        }
+        function handleSectionBAnswer2(option) {
+            respuestasHistorial.push("P2: " + option);
+            sectionB_q2.style.display = 'none';
+            sectionB_q3.style.display = 'block';
+        }
+        function submitOtherAnswerB2() {
+            const val = document.getElementById('inputOtherB2').value.trim();
+            if (!val) return alert('Por favor, escribe tu respuesta.');
+            handleSectionBAnswer2(val);
+        }
+        function handleSectionBAnswer3(option) {
+            respuestasHistorial.push("P3: " + option);
+            sectionB_q3.style.display = 'none';
+            sectionB_q4.style.display = 'block';
+        }
+        function handleSectionBAnswer4(option) {
+            respuestasHistorial.push("P4: " + option);
+            sectionB_q4.style.display = 'none';
+            sectionB_q5.style.display = 'block';
+        }
+        function handleSectionBAnswer5(option) {
+            respuestasHistorial.push("P5: " + option);
+            sectionB_q5.style.display = 'none';
+            contactSection.style.display = 'block';
+        }
+
+        // ==================== FLUJO SECCIÓN C ====================
+        function handleSectionCAnswer1(option) {
+            respuestasHistorial.push("Línea elegida: " + option);
+            userPath = "Sección C (" + option + ")";
+            sectionC.style.display = 'none';
+            contactSection.style.display = 'block';
+        }
+
+        // Envío asíncrono optimizado usando URLSearchParams nativo
+        function submitFinalContactData() {
+            const name = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('whatsapp').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!name || !phone || !email) {
+                alert('Por favor, completa todos los campos requeridos (*).');
                 return;
             }
-            datosUsuario.correo = correoVal;
 
-            // Aquí los datos ya están listos en la variable 'datosUsuario'
-            alert(`¡Registro completado con éxito, ${datosUsuario.nombre}! Nos comunicaremos al celular ${datosUsuario.celular}.`);
-            
-            // NOTA: En este punto puedes integrar una API, guardar en base de datos o enviar un correo electrónico.
+            // Deshabilitar botón para mitigar envíos dobles
+            submitBtn.disabled = true;
+            submitBtn.innerText = "ENVIANDO INFORMACIÓN...";
+
+            // Estructura limpia del Payload
+            const payload = {
+                name: name,
+                phone: phone,
+                email: email,
+                procedencia: userPath,
+                respuestas_detalladas: respuestasHistorial.join(" | ")
+            };
+
+            // Conversión explícita a formato URL Encoded que Sheets interpreta perfectamente
+            const queryParams = new URLSearchParams();
+            queryParams.append("contents", JSON.stringify(payload));
+
+            // Envío por fetch
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors", 
+                body: queryParams
+            })
+            .then(() => {
+                alert('¡Muchas gracias ' + name + '! Tus datos han sido registrados con éxito en nuestro sistema.');
+                
+                // Limpiar campos del formulario
+                document.getElementById('fullName').value = "";
+                document.getElementById('whatsapp').value = "";
+                document.getElementById('email').value = "";
+                submitBtn.disabled = false;
+                submitBtn.innerText = "ENVIAR INFORMACIÓN";
+            })
+            .catch(error => {
+                console.error("Error detectado en envío:", error);
+                alert("Hubo un percance al procesar tus datos. Por favor, inténtalo de nuevo.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = "ENVIAR INFORMACIÓN";
+            });
         }
     </script>
-
 </body>
 </html>
