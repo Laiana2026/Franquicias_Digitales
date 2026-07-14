@@ -25,7 +25,7 @@
             letter-spacing: 1px;
         }
         
-        /* Pantalla de inicio obligatoria para forzar reproducción de audio y video */
+        /* Pantalla de inicio obligatoria */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -65,31 +65,28 @@
             overflow: hidden;
             background-color: #000;
             aspect-ratio: 16/9;
-            /* Evita que navegadores móviles apliquen gestos propios sobre este recuadro */
             touch-action: none; 
             -webkit-user-select: none;
             user-select: none;
         }
 
-        /* El Canvas que dibuja de forma plana y destruye la interfaz del reproductor */
+        /* Canvas visible plano */
         canvas {
             width: 100%;
             height: 100%;
             display: block;
-            pointer-events: none; /* Bloqueo de interacción nativa del objeto */
+            pointer-events: none;
         }
 
-        /* RECUADRO TRANSPARENTE ENFRENTE (ESCUDO ABSOLUTO ANTITÁCTIL) */
+        /* ESCUDO ABSOLUTO ANTITÁCTIL */
         .video-shield {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 999; /* Por encima de cualquier cosa para devorar los toques */
-            background: rgba(0, 0, 0, 0); /* Totalmente transparente */
-            
-            /* Bloqueos a nivel CSS para sistemas operativos móviles */
+            z-index: 999;
+            background: rgba(0, 0, 0, 0);
             -webkit-touch-callout: none !important; 
             -webkit-user-select: none !important;
             user-select: none !important;
@@ -97,14 +94,14 @@
             touch-action: none !important;
         }
 
-        /* El reproductor HTML5 real queda invisible y oculto al sistema del celular */
+        /* El reproductor invisible */
         video {
             display: none !important;
             opacity: 0 !important;
             visibility: hidden !important;
         }
         
-        /* Contenedores base comunes */
+        /* Contenedores de la encuesta */
         .card-container {
             display: none;
             max-width: 580px;
@@ -134,7 +131,6 @@
             line-height: 1.4;
         }
         
-        /* Cuadros de texto de bienvenida por sección */
         .section-welcome-text-a {
             font-size: 1rem;
             color: #444;
@@ -169,7 +165,6 @@
             line-height: 1.5;
         }
         
-        /* Botones de la Pregunta 1 (Sí / No) */
         .btn-group-p1 {
             display: flex;
             justify-content: center;
@@ -189,7 +184,6 @@
         .btn-no { background-color: #dc3545; color: white; }
         .btn-no:hover { background-color: #c82333; }
 
-        /* Botones de opción múltiple */
         .btn-group-options {
             display: flex;
             flex-direction: column;
@@ -211,7 +205,6 @@
             border-color: #cbd5e1;
         }
 
-        /* Campos de texto para la opción "Otro" e Información Personal */
         .input-other-container {
             display: flex;
             gap: 10px;
@@ -294,13 +287,8 @@
     <h1 class="title-heading">DESCUBRE COMO OBTENER TU PROPIA FRANQUICIA DIGITAL</h1>
 
     <div class="video-container" id="videoWrapper">
-        <!-- RECUADRO TRANSPARENTE DELANTERO: Devora y anula cualquier toque en pantalla táctil -->
         <div class="video-shield" id="videoShield"></div>
-        
-        <!-- Canvas visible plano -->
         <canvas id="videoCanvas"></canvas>
-        
-        <!-- Video destruido a nivel visual y de interfaz nativa -->
         <video id="myVideo" playsinline webkit-playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback">
             <source id="videoSource" src="https://videotourl.com/videos/1783970564042-05419a06-d848-4a4f-9289-903e80d8bec1.mp4" type="video/mp4">
         </video>
@@ -325,12 +313,11 @@
         </div>
     </div>
 
-    <!-- ==================== BLOQUES SECCIÓN A ==================== -->
+    <!-- SECCIÓN A -->
     <div class="card-container" id="sectionA">
         <div class="section-welcome-text-a">
             ¡Felicidades por tomar la iniciativa! El primer paso para cambiar tu realidad económica es tener la determination de iniciar. Estás a punto de conocer un modelo de negocio diseñado para quienes buscan resultados reales. Para asegurar que este proyecto se adapte perfectamente a tus metas, por favor responde con total honestidad las siguientes preguntas de perfilamiento:
         </div>
-        
         <p class="card-title" style="text-align: left;">1. ¿Cuál es tu principal motivación para buscar más fuentes de ingresos?</p>
         <div class="btn-group-options">
             <button class="btn-option" onclick="handleSectionAAnswer1('Libertad Financiera y Progreso Económico')">💰 Libertad Financiera y Progreso Económico</button>
@@ -339,7 +326,6 @@
             <button class="btn-option" onclick="handleSectionAAnswer1('Desarrollo Personal y Profesional')">📈 Desarrollo Personal y Profesional</button>
             <button class="btn-option" onclick="handleSectionAAnswer1('Estilo de Vida (Viajes, Cumplir Sueños)')">🌍 Estilo de Vida (Viajes, Cumplir Sueños)</button>
             <button class="btn-option" onclick="handleSectionAAnswer1('Interés por las Ventas o el Mundo Digital')">💻 Interés por las Ventas o el Mundo Digital</button>
-            
             <div class="input-other-container">
                 <input type="text" id="inputOtherA1" class="input-text-field" placeholder="✏️ Otro (Especificar motivo)...">
                 <button class="btn-submit-other" onclick="submitOtherAnswerA1()">Enviar</button>
@@ -355,7 +341,6 @@
             <button class="btn-option" onclick="handleSectionAAnswer2('No sé cómo hacerlo')">📚 No sé cómo hacerlo</button>
             <button class="btn-option" onclick="handleSectionAAnswer2('No tengo la plata')">💸 No tengo la plata</button>
             <button class="btn-option" onclick="handleSectionAAnswer2('Estoy perdido/a, no sé por dónde empezar')">🧭 Estoy perdido/a, no sé por dónde empezar</button>
-            
             <div class="input-other-container">
                 <input type="text" id="inputOtherA2" class="input-text-field" placeholder="✏️ Otro (Especificar impedimento)...">
                 <button class="btn-submit-other" onclick="submitOtherAnswerA2()">Enviar</button>
@@ -396,20 +381,17 @@
         </div>
     </div>
 
-
-    <!-- ==================== BLOQUES SECCIÓN B ==================== -->
+    <!-- SECCIÓN B -->
     <div class="card-container" id="sectionB">
         <div class="section-welcome-text-b">
             ¡Excelente decisión y felicidades por tu iniciativa! Tener dudas es la señal clara de que estás analizando este proyecto con la seriedad que se merece. En los negocios inteligentes, las preguntas correctas traen las mejores respuestas. Las siguientes preguntas están diseñadas específicamente para identificar tus inquietudes y asegurarnos de aclararlas con total transparencia en nuestro próximo paso:
         </div>
-        
-        <p class="card-title" style="text-align: left;">1. Para poder ayudarte mejor en nuestra próxima reunión, ¿cuál es tu principal duda o inquietud en este momento?</p>
+        <p class="card-title" style="text-align: left;">1. Para poder ayudarte mejor en nuestra próxima reunión, ¿cuál es tu principal duda o inquietun en este momento?</p>
         <div class="btn-group-options">
             <button class="btn-option" onclick="handleSectionBAnswer1('No estoy seguro de tener el tiempo suficiente para desarrollar el proyecto.')"><b>A)</b> No estoy seguro de tener el tiempo suficiente para desarrollar el proyecto.</button>
             <button class="btn-option" onclick="handleSectionBAnswer1('Tengo dudas sobre cómo funciona el sistema de comisiones y ganancias.')"><b>B)</b> Tengo dudas sobre cómo funciona el sistema de comisiones y ganancias.</button>
             <button class="btn-option" onclick="handleSectionBAnswer1('Me gusta todo, pero me frena un poco el tema de la inversión inicial.')"><b>C)</b> Me gusta todo, pero me frena un poco el tema de la inversión inicial.</button>
             <button class="btn-option" onclick="handleSectionBAnswer1('No tengo experiencia en ventas o negocios digitales y temo no saber cómo empezar.')"><b>D)</b> No tengo experiencia en ventas o negocios digitales y temo no saber cómo empezar.</button>
-            
             <div class="input-other-container">
                 <input type="text" id="inputOtherB1" class="input-text-field" placeholder="✏️ E) Otro...">
                 <button class="btn-submit-other" onclick="submitOtherAnswerB1()">Enviar</button>
@@ -426,7 +408,6 @@
             <button class="btn-option" onclick="handleSectionBNewQuestion('Desarrollo Personal y Profesional')">📈 Desarrollo Personal y Profesional</button>
             <button class="btn-option" onclick="handleSectionBNewQuestion('Estilo de Vida (Viajes, Cumplir Sueños)')">🌍 Estilo de Vida (Viajes, Cumplir Sueños)</button>
             <button class="btn-option" onclick="handleSectionBNewQuestion('Interés por las Ventas o el Mundo Digital')">💻 Interés por las Ventas o el Mundo Digital</button>
-            
             <div class="input-other-container">
                 <input type="text" id="inputOtherB2_New" class="input-text-field" placeholder="✏️ Otro (Especificar)...">
                 <button class="btn-submit-other" onclick="submitOtherAnswerB2New()">Enviar</button>
@@ -442,7 +423,6 @@
             <button class="btn-option" onclick="handleSectionBAnswer2('No sé cómo hacerlo')">📚 No sé cómo hacerlo</button>
             <button class="btn-option" onclick="handleSectionBAnswer2('No tengo la plata')">💸 No tengo la plata</button>
             <button class="btn-option" onclick="handleSectionBAnswer2('Estoy perdido/a, no sé por dónde empezar')">🧭 Estoy perdido/a, no sé por dónde empezar</button>
-            
             <div class="input-other-container">
                 <input type="text" id="inputOtherB2" class="input-text-field" placeholder="✏️ Otro...">
                 <button class="btn-submit-other" onclick="submitOtherAnswerB2()">Enviar</button>
@@ -480,13 +460,11 @@
         </div>
     </div>
 
-
-    <!-- ==================== BLOQUES SECCIÓN C ==================== -->
+    <!-- SECCIÓN C -->
     <div class="card-container" id="sectionC">
         <div class="section-welcome-text-c">
             ¡Excelente elección y bienvenido/a! Priorizar tu bienestar y buscar soluciones de alta calidad es la mejor decisión. Nuestro catálogo está diseñado para entregarte resultados reales desde el primer día. A continuación, te abrimos las puertas a nuestra tienda digital para que descubras la variedad de opciones disponibles y elijas el producto que se adapte perfectamente a tu necesidad actual. ¡Explóralo aquí mismo!:
         </div>
-        
         <p class="card-title" style="text-align: left;">1. ¿En qué línea de productos específicos te gustaría enfocarte hoy?</p>
         <div class="btn-group-options">
             <button class="btn-option" onclick="handleSectionCAnswer1('Sección C (Tecnología Vitera Biohacking)')">🧬 <b>Tecnología Vitera Biohacking:</b> Innovación avanzada y conceptos de vanguardia para optimizar tu salud.</button>
@@ -497,8 +475,7 @@
         </div>
     </div>
 
-
-    <!-- ==================== FORMULARIO DE CONTACTO FINAL ==================== -->
+    <!-- FORMULARIO FINAL -->
     <div class="card-container" id="contactSection">
         <h2 class="card-title" style="margin-bottom: 10px;">📋 INFORMACIÓN PERSONAL PARA CONTACTO INMEDIATO</h2>
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 25px;">Por favor, completa tus datos correctamente para ponernos en contacto y darte prioridad en la asesoría.</p>
@@ -524,7 +501,7 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0Vtz0WFM46KdRQKCx0-rGB1G40abhuSOETi2cuUwiANf0baEetOn5mfuDnS_jUDJaGA/exec";
 
-        const video = document.getElementById('myVideo');
+        let video = document.getElementById('myVideo');
         const canvas = document.getElementById('videoCanvas');
         const ctx = canvas.getContext('2d');
         const videoWrapper = document.getElementById('videoWrapper');
@@ -533,22 +510,18 @@
         const step1 = document.getElementById('step1');
         const step2 = document.getElementById('step2');
         
-        // Elementos Sección A
+        // Secciones
         const sectionA = document.getElementById('sectionA');
         const sectionA_q2 = document.getElementById('sectionA_q2');
         const sectionA_q3 = document.getElementById('sectionA_q3');
         const sectionA_q4 = document.getElementById('sectionA_q4');
         const sectionA_q5 = document.getElementById('sectionA_q5');
-        
-        // Elementos Sección B
         const sectionB = document.getElementById('sectionB');
         const sectionB_q2_new = document.getElementById('sectionB_q2_new');
         const sectionB_q2 = document.getElementById('sectionB_q2');
         const sectionB_q3 = document.getElementById('sectionB_q3');
         const sectionB_q4 = document.getElementById('sectionB_q4');
         const sectionB_q5 = document.getElementById('sectionB_q5');
-        
-        // Elementos Sección C y Contacto
         const sectionC = document.getElementById('sectionC');
         const contactSection = document.getElementById('contactSection');
 
@@ -558,9 +531,11 @@
         let currentVideoIndex = 1; 
         const secondVideoUrl = "https://videotourl.com/videos/1783955701601-73169369-596f-4c0c-b8a6-d380e48d2922.mp4";
         let animationFrameId;
+        let isVideoDestroyed = false;
 
         function renderCanvasFrames() {
-            if (!video.paused && !video.ended) {
+            if (isVideoDestroyed) return;
+            if (video && !video.paused && !video.ended) {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
             }
             animationFrameId = requestAnimationFrame(renderCanvasFrames);
@@ -584,16 +559,17 @@
             });
         }
 
-        // CONTROL JS ULTRAESTRICTO DE FLUJO DE REPRODUCCIÓN (ANTI-PAUSAS EXTERNAS)
+        // CONTROL DE REPRODUCCIÓN INTERNA
         video.addEventListener('pause', function() {
+            if (isVideoDestroyed) return;
             if ((currentVideoIndex === 1 || currentVideoIndex === 2) && videoWrapper.style.display !== 'none') {
                 video.play();
             }
         });
 
-        // Anti-adelanto preventivo riguroso por línea de tiempo
         let targetTime = 0;
         video.addEventListener('timeupdate', function() {
+            if (isVideoDestroyed) return;
             if (!video.seeking) {
                 if (video.currentTime > targetTime + 1) {
                     video.currentTime = targetTime;
@@ -603,11 +579,13 @@
             }
         });
         video.addEventListener('seeking', function() {
+            if (isVideoDestroyed) return;
             if (video.currentTime > targetTime) {
                 video.currentTime = targetTime;
             }
         });
 
+        // DETECTAR FIN DEL SEGUNDO VIDEO Y DESTRUIR EL MEDIAPLAYER
         video.addEventListener('ended', function() {
             if (currentVideoIndex === 1) {
                 currentVideoIndex = 2;
@@ -616,30 +594,39 @@
                 video.load();
                 video.play().catch(err => console.log(err));
             } else if (currentVideoIndex === 2) {
-                cancelAnimationFrame(animationFrameId);
+                destroyVideoEngine(); // LLAMADA PARA ELIMINAR EL VIDEO POR COMPLETO
                 videoWrapper.style.display = 'none';
                 step1.style.display = 'block';
                 userPath = "Sección Principal";
             }
         });
 
-        // ==========================================
+        // FUNCIÓN CLAVE: Borra el objeto de memoria y del DOM para que no vuelva a sonar nunca
+        function destroyVideoEngine() {
+            isVideoDestroyed = true;
+            cancelAnimationFrame(animationFrameId);
+            if (video) {
+                video.pause();
+                video.src = "";
+                video.load();
+                video.remove(); // Remueve físicamente la etiqueta del HTML
+                video = null;
+            }
+        }
+
         // BLINDAJE ABSOLUTO DE EVENTOS EN EL ESCUDO
-        // ==========================================
         const blockEvent = (e) => {
             e.preventDefault();
             e.stopPropagation();
             return false;
         };
 
-        // Devora clicks de ratón, menús contextuales y arrastres
         shield.addEventListener('contextmenu', blockEvent, true);
         shield.addEventListener('click', blockEvent, true);
         shield.addEventListener('mousedown', blockEvent, true);
         shield.addEventListener('mouseup', blockEvent, true);
         shield.addEventListener('pointerdown', blockEvent, true);
 
-        // Bloquea por completo el entorno táctil móvil (gestos, pulsación larga nativa, pellizcos)
         shield.addEventListener('touchstart', blockEvent, { passive: false });
         shield.addEventListener('touchend', blockEvent, { passive: false });
         shield.addEventListener('touchmove', blockEvent, { passive: false });
@@ -661,7 +648,7 @@
             if(sectionId === 'sectionB') userPath = "Sección B";
         }
 
-        // ==================== FLUJO SECCIÓN A ====================
+        // FLUJO SECCIÓN A
         function handleSectionAAnswer1(option) {
             respuestasHistorial.push("P1: " + option);
             sectionA.style.display = 'none';
@@ -698,7 +685,7 @@
             contactSection.style.display = 'block';
         }
 
-        // ==================== FLUJO SECCIÓN B ====================
+        // FLUJO SECCIÓN B
         function handleSectionBAnswer1(option) {
             respuestasHistorial.push("P1: " + option);
             sectionB.style.display = 'none';
@@ -745,7 +732,7 @@
             contactSection.style.display = 'block';
         }
 
-        // ==================== FLUJO SECCIÓN C ====================
+        // FLUJO SECCIÓN C
         function handleSectionCAnswer1(option) {
             respuestasHistorial.push("Línea elegida: " + option);
             userPath = option; 
